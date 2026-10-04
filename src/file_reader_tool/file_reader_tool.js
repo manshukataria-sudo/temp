@@ -18,6 +18,9 @@ const isValidPath = ({ rootPath, filePath }) => {
 
 async function read_file_tool({ rootPath, filePath }) {
   try {
+    if (typeof rootPath !== "string" || rootPath.trim() === "") {
+      throw new Error("Root folder's path must be a non empty string");
+    }
     if (typeof filePath !== "string" || filePath.trim() === "") {
       throw new Error("File path must be a non empty string");
     }

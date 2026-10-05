@@ -1,20 +1,8 @@
 import fs from "fs/promises";
-import path from "node:path";
+import { isValidPath } from "./path_validator/path_validator.js";
+
 // extension will read file upto MAX_SIZE only
 const MAX_SIZE = 1024 * 1024; // 1MB
-
-// checking if the Agent is not requesting for reading file outside the project root directory
-const isValidPath = ({ rootPath, filePath }) => {
-  const projectRootPath = path.resolve(rootPath);
-  const requestedFilePath = path.resolve(filePath);
-
-  // get the relative path
-  const relativePath = path.relative(projectRootPath, requestedFilePath);
-  return (
-    relativePath === "" ||
-    (!relativePath.startsWith("..") && !path.isAbsolute(relativePath))
-  );
-};
 
 async function read_file_tool({ rootPath, filePath }) {
   try {

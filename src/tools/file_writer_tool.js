@@ -1,17 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { isValidPath } from "./path_validator/path_validator.js";
 
-// checking if the Agent is not requesting for writing file outside the project root directory
-function isValidPath({ rootPath, filePath }) {
-  const projectRootPath = path.resolve(rootPath);
-  const requestedFilePath = path.resolve(filePath);
-  const relativePath = path.relative(projectRootPath, requestedFilePath);
-
-  return (
-    relativePath === "" ||
-    (!relativePath.startsWith("..") && !path.isAbsolute(relativePath))
-  );
-}
 async function write_file_tool({ rootPath, filePath, content }) {
   try {
     // validating the rootPath
